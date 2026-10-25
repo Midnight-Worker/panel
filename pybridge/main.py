@@ -1,33 +1,21 @@
-import time
+
+import pyxel
 from ledmatrix import LEDMatrix
 
 led = LEDMatrix("COM31")
 
-try:
-    x = 0
-    dx = 1
+pyxel.init(64, 16, title="LED Matrix")
+pyxel.load("my_resource.pyxres")
 
-    while True:
-        led.clear()
+def update():
+    pass
 
-        # Bewegtes Quadrat
-        led.rect(x, 4, 8, 8, 8)
-
-        # Grüne Bodenlinie
-        led.line(0, 15, 63, 15, 11)
-
-        led.show()
-
-        x += dx
-
-        if x >= 56 or x <= 0:
-            dx = -dx
-
-        time.sleep(0.03)
-
-except KeyboardInterrupt:
+def draw():
     led.clear()
+
+    # Gesamten Bildausschnitt aus Bildbank 0 anzeigen
+    led.blt(0, 0, 0, 0, 0, 64, 16)
+
     led.show()
 
-finally:
-    led.close()
+pyxel.run(update, draw)
